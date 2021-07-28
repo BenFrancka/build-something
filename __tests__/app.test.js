@@ -1,4 +1,5 @@
 import pool from '../lib/utils/pool.js';
+import twilio from '../lib/utils/twilio.js';
 import setup from '../data/setup.js';
 import request from 'supertest';
 import app from '../lib/app.js';
@@ -21,7 +22,7 @@ describe('inventory routes', () => {
       price: 7,
       inStock: true
     };
-    const res = request(app)
+    const res = await request(app)
       .post('api/v1/inventory')
       .send(potatoes);
     
