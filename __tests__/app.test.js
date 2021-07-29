@@ -13,8 +13,6 @@ describe('inventory routes', () => {
     return setup(pool);
   });
   it('creates an inventory item using POST and sends a text message', async () => {
-
-    
     const potatoes = {
       itemName: 'potatoes 50#',
       itemCategory: 'produce',
@@ -30,6 +28,21 @@ describe('inventory routes', () => {
       id: '1',
       ...potatoes
     });
+  });
+
+  it('gets an inventory item by id  using GET', async () => {
+    const potatoes = await Inventory.insert({
+      itemName: 'potatoes 50#',
+      itemCategory: 'produce',
+      price: 7,
+      inStock: true
+    });
+    const res = await request(app)
+      .get(`/api/v1/inventory/${potatoes.id}`);
+      
+    
+    
+    expect(res.body).toEqual(potatoes);
   });
 
 });
