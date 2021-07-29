@@ -1,9 +1,9 @@
-import pool from '../lib/utils/pool.js';
-import twilio from '../lib/utils/twilio.js';
-import setup from '../data/setup.js';
-import request from 'supertest';
-import app from '../lib/app.js';
-import Item from '../lib/models/Inventory.js';
+const pool = require('../lib/utils/pool');
+const twilio = require('twilio');
+const setup = require('../data/setup');
+const request = require('supertest');
+const app = require('../lib/app');
+const Inventory = require('../lib/models/Inventory');
 
 jest.mock('twilio', () => () => ({
   messages: {
