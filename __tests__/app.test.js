@@ -103,8 +103,10 @@ describe('inventory routes', () => {
       
       
     
-    expect(twilio.sendText).toHaveBeenCalledTimes(2);
-    expect(res.body).not.toContain(potatoes);
+    expect(twilio.sendText).toHaveBeenCalledTimes(3);
+    expect(res.body).toEqual({
+      message: `${potatoes.itemName} was removed from the inventory`
+    });
   });
 
 });
