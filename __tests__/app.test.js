@@ -26,7 +26,7 @@ describe('inventory routes', () => {
       .post('api/v1/inventory')
       .send(potatoes);
     
-    expect(createMessage).toHaveBeenCalledTimes(1);
+    expect(createItem).toHaveBeenCalledTimes(1);
     expect(res.body).ToEqual({
       id: '1',
       ...potatoes
