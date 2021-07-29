@@ -1,21 +1,20 @@
 const pool = require('../lib/utils/pool');
-const twilio = require('twilio');
+const twilio = require('../lib/utils/twilio');
 const setup = require('../data/setup');
 const request = require('supertest');
 const app = require('../lib/app');
 const Inventory = require('../lib/models/Inventory');
 
-jest.mock('twilio', () => () => ({
-  messages: {
-    create: jest.fn(),
-  },
-}));
+
+jest.mock('../lib/utils/twilio');
 
 describe('inventory routes', () => {
   beforeEach(() => {
     return setup(pool);
   });
   it('creates an inventory item using POST and sends a text message', async () => {
+
+    
     const potatoes = {
       itemName: 'potatoes 50#',
       itemCategory: 'produce',
@@ -23,11 +22,11 @@ describe('inventory routes', () => {
       inStock: true
     };
     const res = await request(app)
-      .post('api/v1/inventory')
+      .post('/api/v1/inventory')
       .send(potatoes);
     
-    expect(createItem).toHaveBeenCalledTimes(1);
-    expect(res.body).ToEqual({
+    expect(twilio.sendText).toHaveBeenCalledTimes(1);
+    expect(res.body).toEqual({
       id: '1',
       ...potatoes
     });
