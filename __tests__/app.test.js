@@ -75,7 +75,7 @@ describe('inventory routes', () => {
     ]);
   });
 
-  it('updates an inventory item by id  using PUT and sends a text notification via twilio', async () => {
+  it('updates an inventory item by id using PUT and sends a text notification via twilio', async () => {
     const potatoes = await Inventory.insert({
       itemName: 'potatoes 50#',
       itemCategory: 'produce',
@@ -89,6 +89,22 @@ describe('inventory routes', () => {
     
     expect(twilio.sendText).toHaveBeenCalledTimes(2);
     expect(res.body).toEqual({ ...potatoes, inStock: false });
+  });
+
+  it('deletes an inventory item by id using DELETE and sends a text notification via twilio', async () => {
+    const potatoes = await Inventory.insert({
+      itemName: 'potatoes 50#',
+      itemCategory: 'produce',
+      price: 7,
+      inStock: true
+    });
+    const res = await request(app)
+      .delete(`/api/v1/inventory/${potatoes.id}`);
+      
+      
+    
+    expect(twilio.sendText).toHaveBeenCalledTimes(2);
+    expect(res.body).not.toContain(potatoes);
   });
 
 });
