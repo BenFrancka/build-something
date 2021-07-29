@@ -87,7 +87,7 @@ describe('inventory routes', () => {
       .send({ inStock: false });
       
     
-    expect(twilio.sendText).toHaveBeenCalledTimes(1);
+    expect(twilio.sendText).toHaveBeenCalledTimes(2);
     expect(res.body).toEqual({ ...potatoes, inStock: false });
   });
 
